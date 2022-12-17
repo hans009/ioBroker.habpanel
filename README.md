@@ -1,3 +1,19 @@
+:: Start description of fork
+
+# Adaptions of this fork to iobroker.habpanel
+## Dummy widget
+* Added a _decode pattern_ for datapoint values into custom values. E.g. a window sensor returning _true_ can be decoded to some more human readable value like _Window open_
+* Added a checkbox for pretty printing a JSON datapoint value
+
+## Selection widget
+* Made _Choices source_ for _Server-provided item options' work. Uses a custom user datapoint (e.g. under 0_userdata...) containing _Item options_ as a JSON object. This enables multiple selection widgets use the same  items. Change the underlying JSON datapoint and all referencing selection widgets benefit from the changes immediatelly.
+
+	This was not working in iobroker-habpanel but only in openhab-habpanel. 
+
+:: End description of fork
+
+---
+---
 ![Logo](admin/habpanel.png)
 # ioBroker.habpanel
 
