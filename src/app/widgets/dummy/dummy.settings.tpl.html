@@ -17,6 +17,15 @@
                 <div class="col-lg-9 col-md-9">
                     <item-picker ng-model="form.item"></item-picker>
                 </div>
+                <label class="control-label col-lg-3 col-md-3"></label>
+                <div class="col-lg-9 col-md-9">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="vertical" ng-model="form.prettyPrintJson" />
+                            <span translate-keep-content translate="widget.common.format.prettyPrintJson">Print pretty if value is JSON</span>
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group" ng-class="{error: _form.font_size.$error && _form.submitted}">
@@ -54,6 +63,13 @@
                 </div>
             </div>
 
+            <div class="form-group" ng-class="{error: _form.decodePattern.$error && _form.submitted}">
+                <label class="control-label col-lg-3 col-md-3" translate-keep-content translate="widget.common.decodePattern">Decode pattern</label>
+                <div class="col-lg-9 col-md-9">
+                    <input name="col" ng-model="form.decodePattern" class="form-control" />
+                    <small translate-keep-content translate="widget.common.decodePattern.hint">You can define a decode pattern.<br />Example: true=open,false=closed</small>
+                </div>
+            </div>
             <div class="form-group" ng-class="{error: _form.backdrop_icon.$error && _form.submitted}">
                 <label class="control-label col-lg-3 col-md-3" translate>Backdrop Icon</label>
                 <div class="col-lg-9 col-md-9">

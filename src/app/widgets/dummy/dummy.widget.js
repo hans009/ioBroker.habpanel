@@ -5,7 +5,7 @@
         .module('app.widgets')
         .directive('widgetDummy', widgetDummy)
         .controller('WidgetSettingsCtrl-dummy', WidgetSettingsCtrlDummy)
-        .config(function (WidgetsProvider) { 
+        .config(function (WidgetsProvider) {
             WidgetsProvider.$get().registerType({
                 type: 'dummy',
                 displayName: 'Dummy',
@@ -32,7 +32,7 @@
             }
         };
         return directive;
-        
+
         function link(scope, element, attrs) {
         }
     }
@@ -48,6 +48,24 @@
                 return;
             }
             var value = item.transformedState || item.state;
+
+            if (vm.widget.decodePattern) {
+              for (var singleDecodePattern of vm.widget.decodePattern.split(',')) {
+                  singleDecodePattern = singleDecodePattern.split('=');
+                  if (singleDecodePattern[0] == value.toString()) {
+                        if (singleDecodePattern.length == 2) {
+                            value = singleDecodePattern[1];
+                        } else {
+                            value = singleDecodePattern[0];
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (vm.widget.prettyPrintJson) {
+                value = JSON.stringify(JSON.parse(value), null, 2);
+            }
             if (vm.widget.format) {
                 value = sprintf(vm.widget.format, value);
             }
@@ -85,7 +103,9 @@
             nolinebreak      : widget.nolinebreak,
             unit             : widget.unit,
             format           : widget.format,
+            decodePattern   : widget.decodePattern,
             useserverformat  : widget.useserverformat,
+            prettyPrintJson  : widget.prettyPrintJson,
             backdrop_iconset : widget.backdrop_iconset,
             backdrop_icon    : widget.backdrop_icon,
             backdrop_center  : widget.backdrop_center,
@@ -95,7 +115,7 @@
             icon_nolinebreak : widget.icon_nolinebreak,
             icon_replacestext: widget.icon_replacestext
         };
-        
+
         $scope.$watch('form.item', function (item, oldItem) {
             if (item === oldItem) {
                 return;
@@ -108,7 +128,7 @@
                 }
             });
         });
-        
+
         $scope.dismiss = function() {
             $modalInstance.dismiss();
         };

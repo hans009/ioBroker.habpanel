@@ -45,6 +45,8 @@
 
         function updateValue() {
             vm.item = OHService.getItem(vm.widget.item);
+            var itemMeta = getItemMetaData();
+
             if (!vm.item || vm.item.state === vm.value) return;
             vm.value = vm.item.transformedState || vm.item.state;
             vm.state = vm.item.state;
@@ -52,7 +54,11 @@
             if (!vm.choices) {
                 switch (vm.widget.choices_source) {
                     case 'server':
-                        vm.choices = vm.item.stateDescription.options.map(function (option) {
+                        if (!itemMeta || !itemMeta.options || itemMeta.options.length == 0) {
+                          console.warn('Item options are defined but are null or empty. Should contain at least one item in "options" array');
+                          return {};
+                        }
+                        vm.choices = itemMeta.options.map(function (option) {
                             return { cmd: option.value, label: option.label };
                         });
                         break;
@@ -74,6 +80,13 @@
             function filterChoice(choice, i, choices) {
                 if (choice.cmd === vm.state) return true;
                 return false;
+            }
+            function getItemMetaData() {
+                var itemMeta = OHService.getItem(vm.widget.itemMeta);
+                if (!itemMeta || !itemMeta.state) {
+                    return;
+                }
+                return JSON.parse(itemMeta.state);
             }
             if ($filter('filter')(vm.choices, filterChoice, true).length > 0) {
                 vm.currentChoice = $filter('filter')(vm.choices, filterChoice, true)[0];
@@ -149,6 +162,7 @@
             col             : widget.col,
             row             : widget.row,
             item            : widget.item,
+            itemMeta        : widget.itemMeta,
             hidelabel       : widget.hidelabel,
             hideicon        : widget.hideicon,
             hidestate       : widget.hidestate,
