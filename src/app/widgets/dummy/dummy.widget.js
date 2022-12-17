@@ -48,6 +48,20 @@
                 return;
             }
             var value = item.transformedState || item.state;
+
+            if (vm.widget.decodePattern) {
+              for (var singleDecodePattern of vm.widget.decodePattern.split(',')) {
+                  singleDecodePattern = singleDecodePattern.split('=');
+                  if (singleDecodePattern[0] == value.toString()) {
+                        if (singleDecodePattern.length == 2) {
+                            value = singleDecodePattern[1];
+                        } else {
+                            value = singleDecodePattern[0];
+                        }
+                        break;
+                    }
+                }
+            }
             if (vm.widget.format) {
                 value = sprintf(vm.widget.format, value);
             }
