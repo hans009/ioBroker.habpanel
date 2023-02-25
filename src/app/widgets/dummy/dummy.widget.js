@@ -103,7 +103,7 @@
             nolinebreak      : widget.nolinebreak,
             unit             : widget.unit,
             format           : widget.format,
-            decodePattern   : widget.decodePattern,
+            decodePattern    : widget.decodePattern,
             useserverformat  : widget.useserverformat,
             prettyPrintJson  : widget.prettyPrintJson,
             backdrop_iconset : widget.backdrop_iconset,

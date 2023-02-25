@@ -71,6 +71,19 @@
                     value = sprintf(item.stateDescription.pattern, value);
                 }
             }
+            if (vm.widget.decodePattern) {
+                for (var singleDecodePattern of vm.widget.decodePattern.split(',')) {
+                    singleDecodePattern = singleDecodePattern.split('=');
+                    if (singleDecodePattern[0] == value.toString()) {
+                          if (singleDecodePattern.length == 2) {
+                              value = singleDecodePattern[1];
+                          } else {
+                              value = singleDecodePattern[0];
+                          }
+                          break;
+                      }
+                  }
+              }
             vm.value = value;
             vm.state = item.state;
 
@@ -204,7 +217,8 @@
             value_font_size: widget.value_font_size,
             value_format: widget.value_format,
             value_useserverformat: widget.value_useserverformat,
-            value_nolinebreak: widget.value_nolinebreak
+            value_nolinebreak: widget.value_nolinebreak,
+            decodePattern   : widget.decodePattern
         };
         
         $scope.$watch('form.item', function (item, oldItem) {
